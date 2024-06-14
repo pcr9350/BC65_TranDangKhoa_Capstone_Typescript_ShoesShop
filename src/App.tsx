@@ -10,21 +10,26 @@ import Cart from './pages/Cart/Cart'
 import Profile from './pages/Profile/Profile'
 import Search from './pages/Search/Search'
 
-
 import { store } from './redux/store'
 import { Provider } from 'react-redux';
 import ResponsiveItem from './template/ResponsiveItem'
 import HomeMobile from './pages/Home/HomeMobile'
+//Cài đặt react query
+import {QueryClientProvider,QueryClient} from '@tanstack/react-query'
+//Cài đặt react query devtool
+import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
 // import phải để lên đầu
 
 export const routeLink:any = createBrowserHistory();
 
+const queryClient:QueryClient = new QueryClient()
 function App() {
 
   return (
     <>
       <Provider store={store}>
       <HistoryRouter history={routeLink}>
+      <QueryClientProvider client={queryClient}>
         <Routes>
           <Route path='' element={<HomeTemplate />}>
             <Route index element={<ResponsiveItem component={<Home />} mobileComponent={<HomeMobile />} />}></Route>
@@ -40,6 +45,8 @@ function App() {
 
           </Route>
         </Routes>
+        <ReactQueryDevtools initialIsOpen={false} position="bottom" />
+      </QueryClientProvider>
       </HistoryRouter>
     </Provider>
      
